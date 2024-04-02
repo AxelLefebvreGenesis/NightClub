@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
+using NightClubTestCase.Models;
 
-namespace NightClubTestCase.Models
+namespace NightClubTestCase.DBContext
 {
     public partial class NightClubContext : DbContext
     {
@@ -21,13 +22,13 @@ namespace NightClubTestCase.Models
         public virtual DbSet<MemberCard> MemberCards { get; set; } = null!;
         public virtual DbSet<Record> Records { get; set; } = null!;
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            if (!optionsBuilder.IsConfigured)
-            {
-                optionsBuilder.UseSqlServer("Server=localhost\\SQLEXPRESS;Database=NightClub;Trusted_Connection=True;");
-            }
-        }
+        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        //{
+        //    if (!optionsBuilder.IsConfigured)
+        //    {
+        //        optionsBuilder.UseSqlServer("Server=localhost\\SQLEXPRESS;Database=NightClub;Trusted_Connection=True;");
+        //    }
+        //}
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -38,7 +39,7 @@ namespace NightClubTestCase.Models
                 entity.ToTable("IdentityCard");
 
                 entity.Property(e => e.IdentityCardId)
-                    .ValueGeneratedNever()
+                    .ValueGeneratedOnAdd()
                     .HasColumnName("identityCardId");
 
                 entity.Property(e => e.BirthDate)
@@ -75,7 +76,7 @@ namespace NightClubTestCase.Models
                 entity.HasIndex(e => e.IdentityCardId, "IX_Member_identityCardId");
 
                 entity.Property(e => e.MemberId)
-                    .ValueGeneratedNever()
+                    .ValueGeneratedOnAdd()
                     .HasColumnName("memberId");
 
                 entity.Property(e => e.IdentityCardId).HasColumnName("identityCardId");
@@ -106,7 +107,7 @@ namespace NightClubTestCase.Models
                 entity.ToTable("MemberCard");
 
                 entity.Property(e => e.MemberCardId)
-                    .ValueGeneratedNever()
+                    .ValueGeneratedOnAdd()
                     .HasColumnName("memberCardId");
 
                 entity.Property(e => e.IsLost).HasColumnName("isLost");

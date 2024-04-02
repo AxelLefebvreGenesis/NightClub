@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace NightClubTestCase.Migrations
 {
-    public partial class GenerateNightClubDatabase : Migration
+    public partial class InitialCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -13,7 +13,8 @@ namespace NightClubTestCase.Migrations
                 name: "IdentityCard",
                 columns: table => new
                 {
-                    identityCardId = table.Column<int>(type: "int", nullable: false),
+                    identityCardId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     firstName = table.Column<string>(type: "nvarchar(25)", maxLength: 25, nullable: false),
                     lastName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     birthDate = table.Column<DateTime>(type: "date", nullable: false),
@@ -31,7 +32,8 @@ namespace NightClubTestCase.Migrations
                 name: "MemberCard",
                 columns: table => new
                 {
-                    memberCardId = table.Column<int>(type: "int", nullable: false),
+                    memberCardId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     isLost = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
@@ -43,7 +45,8 @@ namespace NightClubTestCase.Migrations
                 name: "Member",
                 columns: table => new
                 {
-                    memberId = table.Column<int>(type: "int", nullable: false),
+                    memberId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     identityCardId = table.Column<int>(type: "int", nullable: false),
                     mailAddress = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
                     phoneNumber = table.Column<string>(type: "nvarchar(25)", maxLength: 25, nullable: true),

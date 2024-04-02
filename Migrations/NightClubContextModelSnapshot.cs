@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using NightClubTestCase.Models;
+using NightClubTestCase.DBContext;
 
 #nullable disable
 
@@ -25,8 +25,11 @@ namespace NightClubTestCase.Migrations
             modelBuilder.Entity("NightClubTestCase.Models.IdentityCard", b =>
                 {
                     b.Property<int>("IdentityCardId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasColumnName("identityCardId");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdentityCardId"), 1L, 1);
 
                     b.Property<DateTime>("BirthDate")
                         .HasColumnType("date")
@@ -69,8 +72,11 @@ namespace NightClubTestCase.Migrations
             modelBuilder.Entity("NightClubTestCase.Models.Member", b =>
                 {
                     b.Property<int>("MemberId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasColumnName("memberId");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("MemberId"), 1L, 1);
 
                     b.Property<DateTime?>("BlacklistEndDate")
                         .HasColumnType("datetime")
@@ -104,8 +110,11 @@ namespace NightClubTestCase.Migrations
             modelBuilder.Entity("NightClubTestCase.Models.MemberCard", b =>
                 {
                     b.Property<int>("MemberCardId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasColumnName("memberCardId");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("MemberCardId"), 1L, 1);
 
                     b.Property<bool>("IsLost")
                         .HasColumnType("bit")

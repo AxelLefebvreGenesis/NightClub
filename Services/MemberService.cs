@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using NightClubTestCase.DBContext;
 using NightClubTestCase.Models;
 using System.Collections.Generic;
 using System.Security.Cryptography.X509Certificates;
@@ -29,7 +30,7 @@ namespace NightClubTestCase.Services
 
             _context.SaveChanges();
             return true;
-        }   
+        }
 
         public List<Member> GetMembersList()
         {

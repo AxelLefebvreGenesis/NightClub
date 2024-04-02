@@ -21,9 +21,9 @@ namespace NightClubTestCase.Controllers
         }
 
         [HttpPost("create")]
-        public IActionResult CreateMember([FromBody] Member member, [FromBody] MemberCard memberCard)
+        public IActionResult CreateMember([FromBody] MemberDTO memberDto)
         {
-            _memberService.CreateMember(member, memberCard);
+            _memberService.CreateMember(memberDto.Member, memberDto.MemberCard);
             return Ok();
         }
 
