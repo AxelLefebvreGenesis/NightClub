@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace NightClubTestCase.Models
+﻿namespace NightClubTestCase.Models
 {
     public partial class IdentityCard
     {
