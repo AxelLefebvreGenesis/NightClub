@@ -57,8 +57,8 @@ namespace NightClubTestCase.Controllers
         [HttpGet("{memberId}/isblacklisted")]
         public IActionResult IsMemberBlacklisted(int memberId)
         {
-            bool isBlacklisted = _memberService.IsMemberBlacklisted(memberId);
-            return Ok(isBlacklisted);
+            bool? isBlacklisted = _memberService.IsMemberBlacklisted(memberId);
+            return isBlacklisted != null ? Ok(isBlacklisted) : NotFound();
         }
     }
 }

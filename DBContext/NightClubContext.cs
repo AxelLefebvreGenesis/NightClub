@@ -22,14 +22,6 @@ namespace NightClubTestCase.DBContext
         public virtual DbSet<MemberCard> MemberCards { get; set; } = null!;
         public virtual DbSet<Record> Records { get; set; } = null!;
 
-        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        //{
-        //    if (!optionsBuilder.IsConfigured)
-        //    {
-        //        optionsBuilder.UseSqlServer("Server=localhost\\SQLEXPRESS;Database=NightClub;Trusted_Connection=True;");
-        //    }
-        //}
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<IdentityCard>(entity =>

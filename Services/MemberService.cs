@@ -73,10 +73,13 @@ namespace NightClubTestCase.Services
             return false;
         }
 
-        public bool IsMemberBlacklisted(int memberId)
+        public bool? IsMemberBlacklisted(int memberId)
         {
             var member = _context.Members.Find(memberId);
-            return member?.BlacklistEndDate.HasValue == true && member.BlacklistEndDate.Value > DateTime.UtcNow;
+            if (member == null)
+                return null;
+            
+            return member.BlacklistEndDate.HasValue == true && member.BlacklistEndDate.Value > DateTime.UtcNow;
         }
     }
 }
