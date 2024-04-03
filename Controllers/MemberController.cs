@@ -1,8 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using NightClubTestCase.Extensions;
 using NightClubTestCase.Models;
 using NightClubTestCase.Services;
-using System.Diagnostics.Metrics;
 
 namespace NightClubTestCase.Controllers
 {
@@ -21,9 +22,12 @@ namespace NightClubTestCase.Controllers
         }
 
         [HttpPost("create")]
-        public IActionResult CreateMember([FromBody] MemberDTO memberDto)
+        public IActionResult CreateMember([FromBody] Member member)
         {
-            _memberService.CreateMember(memberDto.Member, memberDto.MemberCard);
+            if (!ControllerExtension.MemberCompliance(member, _logger))
+                return BadRequest();
+
+            _memberService.CreateMember(member);
             return Ok();
         }
 
@@ -43,6 +47,9 @@ namespace NightClubTestCase.Controllers
         [HttpPut("update")]
         public IActionResult UpdateMember([FromBody] Member member)
         {
+            if (!ControllerExtension.MemberCompliance(member, _logger))
+                return BadRequest();
+
             var updated = _memberService.UpdateMember(member);
             return updated ? Ok() : NotFound();
         }

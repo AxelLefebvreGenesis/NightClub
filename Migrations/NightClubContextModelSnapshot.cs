@@ -127,13 +127,15 @@ namespace NightClubTestCase.Migrations
 
             modelBuilder.Entity("NightClubTestCase.Models.Record", b =>
                 {
+                    b.Property<int>("MemberId")
+                        .HasColumnType("int")
+                        .HasColumnName("memberId");
+
                     b.Property<int>("MemberCardId")
                         .HasColumnType("int")
                         .HasColumnName("memberCardId");
 
-                    b.Property<int>("MemberId")
-                        .HasColumnType("int")
-                        .HasColumnName("memberId");
+                    b.HasKey("MemberId", "MemberCardId");
 
                     b.HasIndex(new[] { "MemberCardId" }, "IX_Record_memberCardId");
 

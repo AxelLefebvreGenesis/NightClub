@@ -1,8 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using NightClubTestCase.DBContext;
 using NightClubTestCase.Models;
-using System.Collections.Generic;
-using System.Security.Cryptography.X509Certificates;
 
 namespace NightClubTestCase.Services
 {
@@ -15,15 +13,21 @@ namespace NightClubTestCase.Services
             _context = context;
         }
 
-        public bool CreateMember(Member member, MemberCard memberCard)
+        public bool CreateMember(Member member)
         {
+            member.IdentityCardNavigation.HasExpired = member.IdentityCardNavigation.ExpirationDate < DateTime.UtcNow;
+
             _context.Members.Add(member);
-            _context.MemberCards.Add(memberCard);
+            _context.MemberCards.Add(new MemberCard { IsLost = false });
+
+            _context.SaveChanges();
+
+            var memberCardId = _context.MemberCards.OrderByDescending(mc => mc.MemberCardId).First().MemberCardId;
 
             Record record = new()
             { 
                 MemberId = member.MemberId,
-                MemberCardId = memberCard.MemberCardId
+                MemberCardId = memberCardId
             };
 
             _context.Records.Add(record);
@@ -46,12 +50,22 @@ namespace NightClubTestCase.Services
 
         public bool UpdateMember(Member member)
         {
-            var existingMember = _context.Members.Find(member.MemberId);
+            var existingMember = _context.Members
+                .Include(m => m.IdentityCardNavigation)
+                .FirstOrDefault(m => m.MemberId == member.MemberId);
 
             if (existingMember != null)
             {
-                existingMember = member;
-                existingMember.IdentityCardNavigation = member.IdentityCardNavigation;
+                existingMember.PhoneNumber = member.PhoneNumber;
+                existingMember.MailAddress = member.MailAddress;
+
+                existingMember.IdentityCardNavigation.FirstName = member.IdentityCardNavigation.FirstName;
+                existingMember.IdentityCardNavigation.LastName = member.IdentityCardNavigation.LastName;
+                existingMember.IdentityCardNavigation.BirthDate = member.IdentityCardNavigation.BirthDate;
+                existingMember.IdentityCardNavigation.NationalRegisterNumber = member.IdentityCardNavigation.NationalRegisterNumber;
+                existingMember.IdentityCardNavigation.ValidityDate = member.IdentityCardNavigation.ValidityDate;
+                existingMember.IdentityCardNavigation.ExpirationDate = member.IdentityCardNavigation.ExpirationDate;
+
                 _context.SaveChanges();
                 return true;
             }

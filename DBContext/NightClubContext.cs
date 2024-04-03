@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
+﻿using Microsoft.EntityFrameworkCore;
 using NightClubTestCase.Models;
 
 namespace NightClubTestCase.DBContext
@@ -107,7 +104,7 @@ namespace NightClubTestCase.DBContext
 
             modelBuilder.Entity<Record>(entity =>
             {
-                entity.HasNoKey();
+                entity.HasKey(e => new { e.MemberId, e.MemberCardId });
 
                 entity.ToTable("Record");
 

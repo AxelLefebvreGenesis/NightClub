@@ -12,7 +12,7 @@ using NightClubTestCase.DBContext;
 namespace NightClubTestCase.Migrations
 {
     [DbContext(typeof(NightClubContext))]
-    [Migration("20240402114106_InitialCreate")]
+    [Migration("20240403071413_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -129,13 +129,15 @@ namespace NightClubTestCase.Migrations
 
             modelBuilder.Entity("NightClubTestCase.Models.Record", b =>
                 {
+                    b.Property<int>("MemberId")
+                        .HasColumnType("int")
+                        .HasColumnName("memberId");
+
                     b.Property<int>("MemberCardId")
                         .HasColumnType("int")
                         .HasColumnName("memberCardId");
 
-                    b.Property<int>("MemberId")
-                        .HasColumnType("int")
-                        .HasColumnName("memberId");
+                    b.HasKey("MemberId", "MemberCardId");
 
                     b.HasIndex(new[] { "MemberCardId" }, "IX_Record_memberCardId");
 

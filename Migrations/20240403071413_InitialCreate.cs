@@ -71,6 +71,7 @@ namespace NightClubTestCase.Migrations
                 },
                 constraints: table =>
                 {
+                    table.PrimaryKey("PK_Record", x => new { x.memberId, x.memberCardId });
                     table.ForeignKey(
                         name: "FK_Record_Member",
                         column: x => x.memberId,
